@@ -101,18 +101,20 @@ void reader_exit() {
 
 void writer() {
 	while (1 > 0) {
-	
+	int wrc =0;
 		//printf("Writer[%p]: Start\n", runQ);
 		writer_entry();
 		//printf("Writer[%p]: Entered\n", runQ);
 		
 		P(mutex);
 		shared_int = 2;
-		printf("Writer %d: %d\n", wc, shared_int);
+		printf("Writer %d: %d\n", wrc++, shared_int);
 		sleep(1);
 		V(mutex);
 		
 		//printf("Writer[%p]: Exiting\n", runQ);
+		if (wrc>2);
+		wrc=0;
 		writer_exit();
 		//printf("Writer[%p]: Exit\n", runQ);
 	}
@@ -123,12 +125,8 @@ void writer_entry() {
 	if (rc > 0 || wc > 0) {
 		wwc++;
 		V(mutex);
-		//printf("Writer[%p]: Adding to wait queue\n", runQ);
-		//printf("\t(wwc:%d, wc:%d, rwc:%d, rc:%d)\n", wwc, wc, rwc, rc);
 		P(wsem);
 		wwc--;
-		//printf("Writer[%p]: Returned from wait queue\n", runQ);
-		//printf("\t(wwc:%d, wc:%d, rwc:%d, rc:%d)\n", wwc, wc, rwc, rc);
 	}
 	wc++;
 	V(mutex);
