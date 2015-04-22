@@ -1,17 +1,7 @@
-/* 
- * 
- * CSE 430 
- * Project 4
- * Authors: Trenton Smith, Junyu Chen
- *  
- */
+
 #include "sem.h"
-#include <stdio.h>
-#include <unistd.h>
-#include <stdlib.h>
-#include <time.h>
-#define READER_COUNT 3
-#define WRITER_COUNT 2
+#define READER 5
+#define WRITER 2
 
 TCB_t *runQ = 0;
 SEM_t *mutex = 0, *rsem = 0, *wsem = 0;
@@ -25,7 +15,7 @@ void writer_entry();
 void writer_exit();
 
 void main(char** args) {
-	TCB_t* threads[READER_COUNT + WRITER_COUNT];
+	TCB_t* threads[READER + WRITER];
 	puts("initializing semaphores and threads");
 	srand(time(NULL));
 	mutex = malloc(sizeof(SEM_t));
@@ -36,14 +26,14 @@ void main(char** args) {
 	InitSem(wsem, 0);
 	InitQueue(&runQ);
 	int i = 0, j = 0, h = 0;
-	while (i < READER_COUNT + WRITER_COUNT) {	
+	while (i < READER + WRITER) {	
 		int r = rand() % 2;
-		if (j < READER_COUNT && r == 0) {
+		if (j < READER && r == 0) {
 			puts("Adding reader");
 			start_thread(threads[i], reader);
 			i++; j++;
 		}
-		if (h < WRITER_COUNT && r == 1) {
+		if (h < WRITER && r == 1) {
 			puts("Adding writer");
 			start_thread(threads[i], writer);
 			i++; h++;
