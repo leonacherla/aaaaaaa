@@ -6,7 +6,7 @@
 TCB_t *runQ = 0;
 SEM_t *mutex = 0, *rsem = 0, *wsem = 0;
 int rwc = 0, rc = 0, wwc = 0, wc = 0, shared_int = 0;
-	int count=0;
+	int rcount=0;
 
 void reader();
 void reader_entry();
@@ -47,13 +47,14 @@ void main(char** args) {
 }
 
 void reader() {
+rcount ++;
 	while (1 > 0) {
 		//printf("Reader[%p]: Start\n", runQ);
 		reader_entry();
 		//printf("Reader[%p]: Entered\n", runQ);
 		
 		P(mutex);
-		printf("Reader %d reading from writer  : %d\n",count++,runQ, shared_int);
+		printf("Reader %d reading from writer  : %d\n",count,runQ, shared_int);
 		sleep(1);
 		V(mutex);
 		
