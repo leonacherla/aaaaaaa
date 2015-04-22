@@ -113,8 +113,8 @@ void writer() {
 		V(mutex);
 		
 		//printf("Writer[%p]: Exiting\n", runQ);
-		if (wrc>2);
-		wrc=0;
+		if (wrc>2){
+		wrc=0;}
 		writer_exit();
 		//printf("Writer[%p]: Exit\n", runQ);
 	}
