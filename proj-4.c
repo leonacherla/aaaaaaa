@@ -54,7 +54,7 @@ rcount ++;
 		//printf("Reader[%p]: Entered\n", runQ);
 		
 		P(mutex);
-		printf("Reader %d reading from writer  : %d\n",count,runQ, shared_int);
+		printf("Reader %d reading from writer  : %d\n",rcount,runQ, shared_int);
 		sleep(1);
 		V(mutex);
 		
